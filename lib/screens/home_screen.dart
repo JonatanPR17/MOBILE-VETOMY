@@ -19,15 +19,20 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          Image.asset(
-            'assets/images/logo_company.jpg',
-            height: 60, // Tamaño del logo
-          ),
-          Divider(
-            color: Colors.blue, // Línea azul
-            thickness: 2,
-            indent: 80,
-            endIndent: 80,
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Divider(
+                color: Colors.blue, // Línea azul
+                thickness: 2,
+                indent: 80,
+                endIndent: 80,
+              ),
+              Image.asset(
+                'assets/images/logo_company.jpg',
+                height: 60, // Tamaño del logo
+              ),
+            ],
           ),
           SizedBox(height: 20),
           Image.asset(
@@ -44,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {}, // Acción de ingresar
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 25),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15),
@@ -58,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {}, // Acción de registrarse
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[300],
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 25),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(15),
@@ -71,12 +76,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 20),
-          Text(
-            "Sistema Médico - Equipo 3",
-            style: TextStyle(color: Colors.black, fontSize: 12), // Cambié el color a negro para que se vea mejor
-          ),
-          SizedBox(height: 10),
+          SizedBox(height: 120),
         ],
       ),
     );

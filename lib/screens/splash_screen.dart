@@ -11,7 +11,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     // Espera de 5 segundos antes de ir a la pantalla principal
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(seconds: 1), () {
       if (mounted) { // Evita errores si el widget ya no está en el árbol
         Navigator.pushReplacement(
           context,
