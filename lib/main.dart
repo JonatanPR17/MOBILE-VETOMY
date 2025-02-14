@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/splash_screen.dart';  // Importa la pantalla de carga
 import 'screens/home_screen.dart';   // Importa la pantalla principal
-
+import 'screens/login_screen.dart';
 void main() {
   runApp(MyApp());
 }
@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),  // Pantalla de carga inicial
       routes: {
         '/home': (context) => HomeScreen(),  // Pantalla principal
+        '/login': (context) => LoginScreen(),
       },
     );
   }
