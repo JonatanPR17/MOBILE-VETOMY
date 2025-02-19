@@ -79,8 +79,9 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/login');// Acción de ingresar
-                    }, 
+                      Navigator.pushNamed(
+                          context, '/login'); // Acción de ingresar
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       padding: EdgeInsets.symmetric(vertical: 30),
@@ -103,7 +104,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {}, // Acción de registrarse
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/register');
+                    }, // Acción de registrarse
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[300],
                       padding: EdgeInsets.symmetric(vertical: 30),

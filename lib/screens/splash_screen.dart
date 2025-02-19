@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';  // Asegúrate de importar la pantalla principal
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -10,7 +9,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Espera de 5 segundos antes de ir a la pantalla principal
+    // Espera de 3 segundos antes de ir a la pantalla principal
     Future.delayed(Duration(seconds: 3), () {
       if (mounted) {
         Navigator.pushReplacementNamed(context, '/home');

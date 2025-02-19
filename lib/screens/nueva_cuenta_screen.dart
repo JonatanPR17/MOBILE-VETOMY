@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'welcome_screen.dart'; // Importa la nueva pantalla
+import 'login_screen.dart'; // Importa la nueva pantalla
 
-class LoginScreen extends StatefulWidget {
+class NuevaCuentaScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _NuevaCuentaScreenState createState() => _NuevaCuentaScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _NuevaCuentaScreenState extends State<NuevaCuentaScreen> {
   bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,33 +50,27 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 20),
               Text(
-                "¡Bienvenido!",
+                "Nueva cuenta",
                 style: TextStyle(
-                  fontSize: 48,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Comfortaa',
                 ),
               ),
-              SizedBox(height: 5),
-              Text(
-                "Inicia sesión ahora",
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w900,
-                  fontFamily: 'Outfit',
-                ),
-              ),
               SizedBox(height: 20),
+              _buildTextField("Nombre completo", false),
+              SizedBox(height: 10),
               _buildTextField("Correo electrónico", false),
               SizedBox(height: 10),
               _buildTextField("Contraseña", true),
+              SizedBox(height: 10),
+              _buildTextField("Confirmar contraseña", true, true),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -86,27 +81,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 child: Text(
-                  "Ingresar",
+                  "Crear",
                   style: TextStyle(
                     fontSize: 20,
                     fontFamily: 'Outfit',
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
-                  softWrap: false,
                 ),
               ),
-              SizedBox(height: 5),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  "Olvidé mi contraseña",
-                  style: TextStyle(color: Colors.blue),
-                ),
-              ),
-              SizedBox(height: 50),
+              SizedBox(height: 55),
               Text(
-                "o conéctate con:",
+                "o regístrate con:",
                 style: TextStyle(
                   fontSize: 25,
                   color: Colors.black38,
@@ -133,9 +119,11 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildTextField(String hintText, bool isPassword) {
+  Widget _buildTextField(String hintText, bool isPassword, [bool isConfirmPassword = false]) {
     return TextField(
-      obscureText: isPassword && !_isPasswordVisible,
+      obscureText: isPassword && !isConfirmPassword
+          ? !_isPasswordVisible
+          : (isConfirmPassword ? !_isConfirmPasswordVisible : false),
       decoration: InputDecoration(
         hintText: hintText,
         border: OutlineInputBorder(
@@ -143,14 +131,20 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         filled: true,
         fillColor: Colors.grey[200],
-        suffixIcon: isPassword
+        suffixIcon: isPassword || isConfirmPassword
             ? IconButton(
                 icon: Icon(
-                  _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  (isPassword && _isPasswordVisible) || (isConfirmPassword && _isConfirmPasswordVisible)
+                      ? Icons.visibility
+                      : Icons.visibility_off,
                 ),
                 onPressed: () {
                   setState(() {
-                    _isPasswordVisible = !_isPasswordVisible;
+                    if (isPassword) {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    } else if (isConfirmPassword) {
+                      _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                    }
                   });
                 },
               )
