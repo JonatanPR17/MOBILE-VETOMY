@@ -8,12 +8,34 @@ import 'mis_compras_screen.dart';
 import 'configuracion_screen.dart';
 import 'politica_privacidad_screen.dart';
 import 'cerrar_sesion_screen.dart';
+import 'package:image_picker/image_picker.dart'; // Importa para la selección de imágenes
+import 'dart:io'; // Importa para manejar archivos de imagen
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   // Constructor que recibe la GlobalKey
   CustomDrawer({required this.scaffoldKey});
+
+  @override
+  _CustomDrawerState createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  File? _profileImage; // Variable para almacenar la imagen seleccionada
+  final ImagePicker _picker = ImagePicker(); // Instancia del ImagePicker
+
+  // Función para seleccionar una imagen desde la galería o cámara
+  Future<void> _pickImage() async {
+    // Seleccionar imagen desde la galería
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _profileImage = File(pickedFile.path); // Asignar la imagen seleccionada
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,22 +56,27 @@ class CustomDrawer extends StatelessWidget {
                     // Foto de perfil
                     CircleAvatar(
                       radius: 40,
-                      backgroundImage: AssetImage('assets/images/logo_company.jpg'),
+                      backgroundImage: _profileImage != null
+                          ? FileImage(_profileImage!) // Si hay una imagen seleccionada, la mostramos
+                          : AssetImage('assets/images/logo_company.jpg') as ImageProvider, // Imagen por defecto
                     ),
                     // Ícono de lápiz sobre la foto de perfil
                     Positioned(
                       bottom: 5,
                       right: 5,
-                      child: Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: Color(0xFF159EEC), // Celeste
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                          size: 15,
+                      child: GestureDetector(
+                        onTap: _pickImage, // Llamamos a la función para seleccionar la imagen
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Color(0xFF159EEC), // Celeste
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                            size: 15, // Tamaño del icono como en tu versión original
+                          ),
                         ),
                       ),
                     ),
@@ -58,7 +85,7 @@ class CustomDrawer extends StatelessWidget {
                 SizedBox(height: 10),
                 // Nombre del usuario debajo de la foto de perfil
                 Text(
-                  "Paitan Romero Jonatan",
+                  "Paitan Romero Jonatan", // Aquí puedes cambiar el nombre si es necesario
                   style: TextStyle(
                     color: Colors.black, // Texto en negro
                     fontSize: 20,
@@ -83,7 +110,7 @@ class CustomDrawer extends StatelessWidget {
                   _buildListTile(context, Icons.calendar_today, 'Citas', CitasScreen()),
                   _buildListTile(context, Icons.pets, 'Mi Mascota', MiMascotaScreen()),
                   _buildListTile(context, Icons.shopping_cart, 'Mis Compras', MisComprasScreen()),
-                  _buildListTile(context, Icons.settings, 'Configuración', ConfiguracionScreen()),
+                  _buildListTile(context, Icons.settings, 'Configuración', ConfiguracionesScreen()),
                   _buildListTile(context, Icons.policy, 'Política y Privacidad', PoliticaPrivacidadScreen()),
                   _buildListTile(context, Icons.exit_to_app, 'Cerrar sesión', null),
                 ],

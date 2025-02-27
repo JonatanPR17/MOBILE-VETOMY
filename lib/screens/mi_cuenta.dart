@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'cambiar_contraseña.dart';
+import 'dart:io'; // Para trabajar con archivos de imagen
 
 class MiCuentaScreen extends StatefulWidget {
   @override
@@ -6,6 +9,24 @@ class MiCuentaScreen extends StatefulWidget {
 }
 
 class _MiCuentaScreenState extends State<MiCuentaScreen> {
+  bool _isEditing = false; // Controla si los campos están habilitados o no
+  bool _showMoreOptions = false; // Controla si la opción "Más opciones" debe mostrarse
+  File? _profileImage; // Variable para almacenar la imagen seleccionada
+
+  final ImagePicker _picker = ImagePicker(); // Instancia del ImagePicker
+
+  // Función para seleccionar una imagen desde la galería o cámara
+  Future<void> _pickImage() async {
+    // Seleccionar imagen desde la galería
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _profileImage = File(pickedFile.path); // Asignar la imagen seleccionada
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +48,7 @@ class _MiCuentaScreenState extends State<MiCuentaScreen> {
                 ),
               ),
               SizedBox(height: 20),
+              // Foto de perfil
               Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -44,16 +66,28 @@ class _MiCuentaScreenState extends State<MiCuentaScreen> {
                     CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white,
-                      backgroundImage: AssetImage('assets/images/logo_company.jpg'),
+                      backgroundImage: _profileImage != null
+                          ? FileImage(_profileImage!) // Si hay una imagen seleccionada, la mostramos
+                          : AssetImage('assets/images/logo_company.jpg') as ImageProvider, // Imagen por defecto
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
+                    Positioned(
+                      bottom: 5,
+                      right: 5,
+                      child: GestureDetector(
+                        onTap: _pickImage, // Llamamos a la función para seleccionar la imagen
+                        child: Container(
+                          padding: EdgeInsets.all(8), // Tamaño del contenedor
+                          decoration: BoxDecoration(
+                            color: Color(0xFF159EEC), // Celeste
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                            size: 18, // Tamaño del icono
+                          ),
+                        ),
                       ),
-                      padding: EdgeInsets.all(5),
-                      child: Icon(Icons.edit, color: Colors.white, size: 18),
                     ),
                   ],
                 ),
@@ -72,12 +106,39 @@ class _MiCuentaScreenState extends State<MiCuentaScreen> {
               SizedBox(height: 10),
               _buildTextField("Correo electrónico", "i2316622@continental.edu.pe", false),
               SizedBox(height: 10),
-              _buildTextField("Contraseña", "****************", false),
+              _buildTextField("Contraseña", "****************", true),
+              
+              Visibility(
+                visible: _isEditing, // Mostrar solo cuando estamos en modo de edición
+                child: Padding(
+                  padding: EdgeInsets.only(left: 10, top: 10),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        // Acción para ir a la pantalla de nueva contraseña
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CambiarContrasenaScreen()),
+                        );
+                      },
+                      child: Text("Más opciones"),
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(height: 10),
               _buildTextField("Fecha de nacimiento", "20/20/2020", false),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    _isEditing = !_isEditing; // Cambiar el estado de edición
+                    if (_isEditing) {
+                      _showMoreOptions = true; // Mostrar "Más opciones" cuando se haga clic en editar
+                    }
+                  });
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 100),
@@ -86,7 +147,7 @@ class _MiCuentaScreenState extends State<MiCuentaScreen> {
                   ),
                 ),
                 child: Text(
-                  "Editar",
+                  _isEditing ? "Guardar" : "Editar",
                   style: TextStyle(
                     fontSize: 20,
                     fontFamily: 'Outfit',
@@ -113,7 +174,7 @@ class _MiCuentaScreenState extends State<MiCuentaScreen> {
         ),
         SizedBox(height: 5),
         TextField(
-          enabled: false,  // Deshabilitar el campo de texto
+          enabled: _isEditing,  // Habilitar o deshabilitar el campo según _isEditing
           obscureText: isPassword,
           decoration: InputDecoration(
             border: OutlineInputBorder(
