@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'cambiar_contraseña.dart';
+import 'change_password.dart';
+import 'custom_drawer.dart'; // Importa el CustomDrawer
 import 'dart:io'; // Para trabajar con archivos de imagen
 
 class MiCuentaScreen extends StatefulWidget {
@@ -14,6 +15,7 @@ class _MiCuentaScreenState extends State<MiCuentaScreen> {
   File? _profileImage; // Variable para almacenar la imagen seleccionada
 
   final ImagePicker _picker = ImagePicker(); // Instancia del ImagePicker
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // GlobalKey para el Scaffold
 
   // Función para seleccionar una imagen desde la galería o cámara
   Future<void> _pickImage() async {
@@ -30,7 +32,9 @@ class _MiCuentaScreenState extends State<MiCuentaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // Asigna la GlobalKey al Scaffold
       backgroundColor: Colors.white,
+      drawer: CustomDrawer(scaffoldKey: _scaffoldKey), // Añade el CustomDrawer
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
@@ -38,14 +42,31 @@ class _MiCuentaScreenState extends State<MiCuentaScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 40),
-              Align(
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.blue, size: 30),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.menu, color: Colors.black, size: 30),
+                    onPressed: () {
+                      _scaffoldKey.currentState?.openDrawer();
+                    },
+                  ),
+                  Spacer(),
+                  Text(
+                    "Mi cuenta",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Comfortaa',
+                    ),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    icon: Icon(Icons.arrow_back, color: Colors.blue, size: 30),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
               ),
               SizedBox(height: 20),
               // Foto de perfil
@@ -93,21 +114,12 @@ class _MiCuentaScreenState extends State<MiCuentaScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              Text(
-                "Mi cuenta",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Comfortaa',
-                ),
-              ),
-              SizedBox(height: 20),
               _buildTextField("Nombre completo", "Jonatan Alexander Paitan Romero", false),
               SizedBox(height: 10),
               _buildTextField("Correo electrónico", "i2316622@continental.edu.pe", false),
               SizedBox(height: 10),
               _buildTextField("Contraseña", "****************", true),
-              
+
               Visibility(
                 visible: _isEditing, // Mostrar solo cuando estamos en modo de edición
                 child: Padding(

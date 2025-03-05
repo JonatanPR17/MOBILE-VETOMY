@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'custom_drawer.dart'; // Importa el CustomDrawer
 
 class NotificacionesScreen extends StatefulWidget {
   @override
@@ -8,18 +9,22 @@ class NotificacionesScreen extends StatefulWidget {
 class _NotificacionesScreenState extends State<NotificacionesScreen> {
   // Estado de los switches
   Map<String, bool> _switchValues = {
-    "Noticiacion General": true,
+    "Notificación General": true,
     "Sonido": true,
     "Vibrar": false,
     "Ofertas Especiales": false,
     "Pagos": true,
-    "Promocion y descuento": false,
+    "Promoción y descuento": false,
   };
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // GlobalKey para el Scaffold
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // Asigna la GlobalKey al Scaffold
       backgroundColor: Colors.white,
+      drawer: CustomDrawer(scaffoldKey: _scaffoldKey), // Añade el CustomDrawer
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,12 +34,12 @@ class _NotificacionesScreenState extends State<NotificacionesScreen> {
             child: Row(
               children: [
                 IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.blue, size: 30),
+                  icon: Icon(Icons.menu, color: Colors.black, size: 30), // Icono del menú
                   onPressed: () {
-                    Navigator.pop(context);
+                    _scaffoldKey.currentState?.openDrawer(); // Abrir el CustomDrawer
                   },
                 ),
-                SizedBox(width: 10),
+                Spacer(),
                 Text(
                   "Notificaciones",
                   style: TextStyle(
@@ -42,6 +47,13 @@ class _NotificacionesScreenState extends State<NotificacionesScreen> {
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Comfortaa',
                   ),
+                ),
+                Spacer(),
+                IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.blue, size: 30),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),

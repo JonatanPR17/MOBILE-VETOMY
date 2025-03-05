@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../screens/welcome_screen.dart';
+import 'custom_drawer.dart'; // Importa el CustomDrawer
 
 class CambiarContrasenaScreen extends StatefulWidget {
   @override
@@ -10,10 +12,14 @@ class _CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
   bool _verNueva = false;
   bool _verConfirmar = false;
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // GlobalKey para el Scaffold
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // Asigna la GlobalKey al Scaffold
       backgroundColor: Colors.white,
+      drawer: CustomDrawer(scaffoldKey: _scaffoldKey), // Añade el CustomDrawer
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,21 +27,19 @@ class _CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                IconButton(
+                  icon: Icon(Icons.menu, color: Colors.black, size: 30), // Icono del menú
+                  onPressed: () {
+                    _scaffoldKey.currentState?.openDrawer(); // Abrir el CustomDrawer
+                  },
+                ),
                 IconButton(
                   icon: Icon(Icons.arrow_back, color: Colors.blue, size: 30),
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                ),
-                SizedBox(width: 10),
-                Text(
-                  "Contraseña",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Comfortaa',
-                  ),
                 ),
               ],
             ),
@@ -82,7 +86,10 @@ class _CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                       borderRadius: BorderRadius.circular(10)),
                 ),
                 onPressed: () {
-                  // Acción de actualizar contraseña
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                  );
                 },
                 child: Text(
                   "ACTUALIZAR CAMBIOS",

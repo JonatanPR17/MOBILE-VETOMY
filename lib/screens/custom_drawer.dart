@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'welcome_screen.dart';
-import 'mi_cuenta.dart';
-import 'tienda_screen.dart';
-import 'citas_screen.dart';
-import 'mi_mascota_screen.dart';
-import 'mis_compras_screen.dart';
-import 'configuracion_screen.dart';
-import 'politica_privacidad_screen.dart';
-import 'cerrar_sesion_screen.dart';
+import 'my_account_screen.dart';
+import 'store_screen.dart';
+import 'my_appointments_screen.dart';
+import 'my_pet_screen.dart';
+import 'my_purchases_screen.dart';
+import 'configuration_screen.dart';
+import 'close_session_screen.dart';
 import 'package:image_picker/image_picker.dart'; // Importa para la selección de imágenes
 import 'dart:io'; // Importa para manejar archivos de imagen
 
@@ -111,7 +110,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   _buildListTile(context, Icons.pets, 'Mi Mascota', MiMascotaScreen()),
                   _buildListTile(context, Icons.shopping_cart, 'Mis Compras', MisComprasScreen()),
                   _buildListTile(context, Icons.settings, 'Configuración', ConfiguracionesScreen()),
-                  _buildListTile(context, Icons.policy, 'Política y Privacidad', PoliticaPrivacidadScreen()),
                   _buildListTile(context, Icons.exit_to_app, 'Cerrar sesión', null),
                 ],
               ),
