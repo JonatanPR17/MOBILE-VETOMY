@@ -15,6 +15,8 @@ import 'screens/my_pet_screen.dart';
 import 'screens/history_screen.dart';
 import 'screens/history_2_screen.dart';
 import 'screens/my_appointments_screen.dart';
+import 'screens/register_appointmet_screen.dart';
+import 'screens/query_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/account',
+      initialRoute: '/welcome',
       routes: {
         '/splash': (context) => SplashScreen(),
         '/home': (context) => HomeScreen(),
@@ -48,6 +50,9 @@ class MyApp extends StatelessWidget {
         '/historial': (context) => HistorialScreen(),
         '/historial2': (context) => Historial2Screen(),
         '/citas': (context) => CitasScreen(),
+        '/new_cita': (context) => DatosPersonalesScreen(),
+        '/query': (context) => ConsultaScreen(),
+
 
       },
     );

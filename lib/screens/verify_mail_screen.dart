@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/create_new_password_screen.dart';
 
 class VerificarCorreoScreen extends StatelessWidget {
   @override
@@ -117,6 +118,10 @@ class VerificarCorreoScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   // Acción de ingresar
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CrearNuevaContrasenaScreen()),
+                );
                 },
                 child: Text(
                   "Ingresar",

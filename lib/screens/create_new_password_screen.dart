@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/login_screen.dart';
 
 class CrearNuevaContrasenaScreen extends StatefulWidget {
   @override
@@ -114,6 +115,10 @@ class _CrearNuevaContrasenaScreenState
                 ),
                 onPressed: () {
                   // Acción de crear nueva contraseña
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
                 },
                 child: Text(
                   "Crear",

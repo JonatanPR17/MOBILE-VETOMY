@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vetomymobile/data/usecase/authentication_usecase_imp.dart';
-import 'package:vetomymobile/domain/auth/models/user.dart';
+import '../screens/recover_account_screen.dart';
 import 'package:vetomymobile/domain/auth/models/login_request.dart';
 import 'welcome_screen.dart'; // Importa la nueva pantalla
 
@@ -17,7 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String loginText = this.login_state != HTTP_STATES.LOADING  ? "Ingresar": "Cargando";
+    String loginText =
+        this.login_state != HTTP_STATES.LOADING ? "Ingresar" : "Cargando";
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -79,9 +80,10 @@ class _LoginScreenState extends State<LoginScreen> {
               _buildTextField("Contraseña", true),
               SizedBox(height: 20),
               ElevatedButton(
-                //enabled: this.login_state =! HTTP_STATES.LOADING, 
-                onPressed: this.login_state != HTTP_STATES.LOADING 
-                  ? () => login(context) : (){},
+                //enabled: this.login_state =! HTTP_STATES.LOADING,
+                onPressed: this.login_state != HTTP_STATES.LOADING
+                    ? () => login(context)
+                    : () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 100),
@@ -102,7 +104,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 5),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RecuperarCuentaScreen()),
+                  );
+                },
                 child: Text(
                   "Olvidé mi contraseña",
                   style: TextStyle(color: Colors.blue),
@@ -192,12 +199,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     print(reqData);
-    setState((){
+    setState(() {
       login_state = HTTP_STATES.LOADING;
     });
     _auth.login(reqData).then((profile) {
       print("${profile.name} ${profile.lastName} -- ${profile.rol!.name}");
-      setState((){
+      setState(() {
         login_state = HTTP_STATES.DONE;
       });
       SnackBar snackBar = SnackBar(
@@ -210,9 +217,9 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (context) => WelcomeScreen()),
       );
     }).catchError((err) {
-      setState((){
-      login_state = HTTP_STATES.ERROR;
-    });
+      setState(() {
+        login_state = HTTP_STATES.ERROR;
+      });
       print(err);
       SnackBar snackBar = SnackBar(
         content: Text(
@@ -224,5 +231,8 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 
 enum HTTP_STATES {
- LOADING, DONE, ERROR, NONE,
+  LOADING,
+  DONE,
+  ERROR,
+  NONE,
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vetomymobile/screens/register_appointmet_screen.dart';
 import 'custom_drawer.dart'; // Importa el CustomDrawer
 
 class CitasScreen extends StatefulWidget {
@@ -31,6 +32,16 @@ class _CitasScreenState extends State<CitasScreen> {
                       _scaffoldKey.currentState?.openDrawer(); // Abrir el CustomDrawer
                     },
                   ),
+                  Spacer(),
+                  Text(
+                    "Mis Citas",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Comfortaa',
+                    ),
+                  ),
+                  Spacer(),
                   IconButton(
                     icon: Icon(Icons.arrow_back, color: Colors.blue, size: 30),
                     onPressed: () {
@@ -154,7 +165,7 @@ class _CitasScreenState extends State<CitasScreen> {
           children: [
             CircleAvatar(
               radius: 25,
-              backgroundImage: AssetImage('assets/doctor_placeholder.png'),
+              backgroundImage: AssetImage('assets/images/doctor.jpg'),
             ),
             SizedBox(width: 10),
             Expanded(
@@ -192,7 +203,12 @@ class _CitasScreenState extends State<CitasScreen> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12)),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DatosPersonalesScreen()),
+                );
+          },
           child: Text(
             'Agregar Nueva Cita',
             style: TextStyle(

@@ -10,61 +10,57 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,  // Asigna la GlobalKey al Scaffold
       backgroundColor: Colors.white,
-      // Drawer añadido al Scaffold
       drawer: CustomDrawer(scaffoldKey: _scaffoldKey),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 40), // Espacio superior
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.menu, size: 30, color: Colors.black87),
-                    onPressed: () {
-                      // Ahora usamos la GlobalKey para abrir el Drawer
-                      _scaffoldKey.currentState?.openDrawer();
-                    },
-                  ),
-                  Text(
-                    "¡Bienvenido!",
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Comfortaa',
-                    ),
-                  ),
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage('assets/images/logo_company.jpg'),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            
-            // Stack para superponer el contenedor encima de la imagen
-            Stack(
+      body: Column(
+        children: [
+          SizedBox(height: 10),  
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,  
               children: [
-                // Imagen de fondo
+                IconButton(
+                  icon: Icon(Icons.menu, size: 30, color: Colors.black87),
+                  onPressed: () {
+                    _scaffoldKey.currentState?.openDrawer();
+                  },
+                ),
+                Text(
+                  "¡Bienvenido!",
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Comfortaa',
+                  ),
+                ),
+                CircleAvatar(
+                  radius: 20,
+                  backgroundImage: AssetImage('assets/images/logo_company.jpg'),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10),  
+          
+          Expanded(
+            child: Stack(
+              clipBehavior: Clip.none, 
+              children: [
                 ClipRRect(
                   borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
                   child: Image.asset(
-                    'assets/images/doctor.jpg', // Asegúrate de tener esta imagen en tu proyecto
+                    'assets/images/doctor.jpg',
                     fit: BoxFit.cover,
                     width: double.infinity,
+                    height: 600, // Ajustado para hacer espacio a la tarjeta
                   ),
                 ),
-                
-                // Contenedor superpuesto encima de la imagen
                 Positioned(
-                  top: 525, // Ajusta la distancia desde la parte superior
+                  bottom: -100, // Ahora está más abajo para mayor equilibrio
                   left: 0,
                   right: 0,
                   child: Container(
-                    width: double.infinity,  // Hace que el Container ocupe todo el ancho de la pantalla
+                    width: MediaQuery.of(context).size.width, // Ocupa todo el ancho
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -81,7 +77,7 @@ class WelcomeScreen extends StatelessWidget {
                       ],
                     ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start, // Alinea el texto a la izquierda
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           "Usuario",
@@ -113,8 +109,9 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+          SizedBox(height: 100), // Espacio para evitar que se corte el contenido
+        ],
       ),
     );
   }

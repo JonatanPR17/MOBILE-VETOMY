@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/verify_mail_screen.dart';
 
 class RecuperarCuentaScreen extends StatelessWidget {
   @override
@@ -126,6 +127,11 @@ class RecuperarCuentaScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   // Acción de enviar enlace de recuperación
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VerificarCorreoScreen()),
+                  );
                 },
                 child: Text(
                   "Enviar",

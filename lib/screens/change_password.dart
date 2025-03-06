@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../screens/welcome_screen.dart';
+import '../screens/recover_account_screen.dart';
 import 'custom_drawer.dart'; // Importa el CustomDrawer
 
 class CambiarContrasenaScreen extends StatefulWidget {
@@ -35,6 +36,16 @@ class _CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                     _scaffoldKey.currentState?.openDrawer(); // Abrir el CustomDrawer
                   },
                 ),
+                Spacer(),
+                  Text(
+                    "Contraseña",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Comfortaa',
+                    ),
+                  ),
+                  Spacer(),
                 IconButton(
                   icon: Icon(Icons.arrow_back, color: Colors.blue, size: 30),
                   onPressed: () {
@@ -55,7 +66,12 @@ class _CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
             child: Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RecuperarCuentaScreen()),
+                );
+                },
                 child: Text(
                   "Olvidé mi contraseña",
                   style: TextStyle(color: Colors.blue),
@@ -92,7 +108,7 @@ class _CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                   );
                 },
                 child: Text(
-                  "ACTUALIZAR CAMBIOS",
+                  "Actualizar Cambios",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
