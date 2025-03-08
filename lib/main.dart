@@ -18,6 +18,7 @@ import 'screens/my_appointments_screen.dart';
 import 'screens/register_appointmet_screen.dart';
 import 'screens/query_screen.dart';
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initLocalStorage();
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         '/citas': (context) => CitasScreen(),
         '/new_cita': (context) => DatosPersonalesScreen(),
         '/query': (context) => ConsultaScreen(),
+
 
 
       },

@@ -160,7 +160,7 @@ Widget _buildTextField(String hintText, bool isPassword, FocusNode focusNode) {
         labelText: hintText, // El texto del label sube cuando el campo está enfocado o tiene texto
         labelStyle: TextStyle(
           color: focusNode.hasFocus || (isPassword && _passwordController.text.isNotEmpty) || (!isPassword && _emailController.text.isNotEmpty) 
-              ? Colors.blue 
+              ? Colors.black 
               : Colors.black, // Cambiar color del label si está enfocado o tiene texto
         ),
         hintText: focusNode.hasFocus || (isPassword && _passwordController.text.isNotEmpty) || (!isPassword && _emailController.text.isNotEmpty) 

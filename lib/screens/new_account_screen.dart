@@ -151,11 +151,10 @@ class _NuevaCuentaScreenState extends State<NuevaCuentaScreen> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller, {bool isEmail = false, bool isPassword = false}) {
+  Widget _buildTextField(String label, TextEditingController controller, {bool isEmail = false}) {
     return TextFormField(
       controller: controller,
       keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,
-      obscureText: isPassword ? true : false,
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
@@ -168,11 +167,6 @@ class _NuevaCuentaScreenState extends State<NuevaCuentaScreen> {
         if (isEmail) {
           if (!RegExp(r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$').hasMatch(value)) {
             return "Correo no válido";
-          }
-        }
-        if (isPassword && label == "Confirmar contraseña") {
-          if (value != _passwordController.text) {
-            return "Las contraseñas no coinciden";
           }
         }
         return null;
@@ -196,6 +190,12 @@ class _NuevaCuentaScreenState extends State<NuevaCuentaScreen> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) return "Campo requerido";
+
+        // Valida que las contraseñas coincidan
+        if (label == "Confirmar contraseña" && value != _passwordController.text) {
+          return "Las contraseñas no coinciden";
+        }
+
         return null;
       },
     );
